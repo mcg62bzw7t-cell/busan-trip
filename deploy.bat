@@ -2,7 +2,7 @@
 chcp 65001 >nul 2>&1
 echo ========================================
 echo   釜山行程 - 部署到 Netlify
-echo   https://busan4d3n.netlify.app
+echo   https://busan0903.netlify.app
 echo ========================================
 echo.
 
@@ -26,7 +26,7 @@ if %errorlevel%==0 (
     echo.
     echo ========================================
     echo   部署成功！
-    echo   https://busan4d3n.netlify.app
+    echo   https://busan0903.netlify.app
     echo ========================================
 ) else (
     echo [ERROR] 部署失败，请检查错误信息
