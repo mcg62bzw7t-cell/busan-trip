@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>釜山闺蜜4日行 · 9/3-9/6</title>
+<meta name="description" content="上海→釜山4天3晚闺蜜行，海景地标+美容美发+美食购物">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+:root {
+  --bg-primary:    #ffffff;
+  --bg-secondary:  #f5f5f7;
+  --bg-tertiary:   #fbfbfd;
+  --bg-grouped:    #f2f2f7;
+  --bg-elevated:   #ffffff;
+  --text-primary:   #1d1d1f;
+  --text-secondary: #86868b;
+  --text-tertiary:  #aeaeb2;
+  --accent:        #0071e3;
+  --accent-hover:  #0077ed;
+  --tint-red:    #ff3b30;
+  --tint-orange: #ff9500;
+  --tint-green:  #34c759;
+  --tint-blue:   #007aff;
+  --tint-purple: #af52de;
+  --tint-pink:   #ff2d55;
+  --separator:  rgba(60, 60, 67, .12);
+  --shadow-sm:  0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+  --shadow-md:  0 4px 14px rgba(0,0,0,.08);
+  --shadow-lg:  0 8px 30px rgba(0,0,0,.12);
+  --radius-sm:  8px;
+  --radius-md:  12px;
+  --radius-lg:  16px;
+  --radius-xl:  20px;
+  --safe-top:    env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+               "Helvetica Neue", "Arial", sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.47059;
+  letter-spacing: -0.022em;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+#map { width: 100%; height: 40vh; min-height: 280px; position: sticky; top: 0; z-index: 100; }
+.locate-btn {
+  width: 36px; height: 36px; border-radius: 8px;
+  background: rgba(255,255,255,.92); backdrop-filter: blur(8px);
+  border: none; box-shadow: 0 1px 4px rgba(0,0,0,.18);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.locate-btn.active { color: #007aff; }
+@keyframes loc-pulse {
+  0%   { transform: scale(1); opacity: .55; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+.loc-pulse {
+  width: 14px; height: 14px; border-radius: 50%;
+  background: rgba(0,122,255,.25);
+  animation: loc-pulse 1.6s ease-out infinite;
+}
+
+.tabs {
+  display: flex; gap: 6px; padding: 12px 16px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+  background: rgba(255,255,255,.85); -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px); position: sticky; top: 40vh; z-index: 99;
+  border-bottom: .5px solid var(--separator); scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar { display: none; }
+.tab {
+  flex-shrink: 0; padding: 7px 16px; border-radius: 980px; border: none;
+  background: var(--bg-grouped); color: var(--text-secondary);
+  font-size: 14px; font-weight: 500; cursor: pointer; transition: all .25s ease;
+  white-space: nowrap; letter-spacing: -0.01em;
+}
+.tab:active { transform: scale(.96); }
+.tab.active { background: var(--accent); color: #fff; }
+
+.content { max-width: 680px; margin: 0 auto; padding: 16px 16px calc(24px + var(--safe-bottom)); }
+
+.hero { text-align: center; padding: 28px 20px 20px; }
+.hero h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.025em; line-height: 1.15; }
+.hero .subtitle { font-size: 17px; color: var(--text-secondary); margin-top: 6px; font-weight: 400; }
+
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+.info-card { background: var(--bg-elevated); border-radius: var(--radius-lg); padding: 16px; box-shadow: var(--shadow-sm); }
+.info-card .label { font-size: 12px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: .02em; margin-bottom: 6px; }
+.info-card .value { font-size: 15px; font-weight: 600; line-height: 1.4; }
+
+.section-head { font-size: 13px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: .03em; padding: 20px 0 8px; }
+
+.day-head { padding: 20px 0 12px; }
+.day-head h2 { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
+.day-head p { font-size: 15px; color: var(--text-secondary); margin-top: 2px; }
+
+.route-bar { background: var(--bg-elevated); border-radius: var(--radius-md); padding: 12px 14px; margin-bottom: 14px; box-shadow: var(--shadow-sm); font-size: 13px; color: var(--text-secondary); line-height: 1.7; white-space: pre-line; }
+.route-bar strong { color: var(--text-primary); }
+
+.timeline { position: relative; padding-left: 24px; }
+.timeline::before { content: ''; position: absolute; left: 7px; top: 20px; bottom: 20px; width: 1.5px; background: var(--separator); }
+.tl-item { position: relative; margin-bottom: 10px; }
+.tl-dot { position: absolute; left: -20px; top: 18px; width: 10px; height: 10px; border-radius: 50%; z-index: 1; box-shadow: 0 0 0 3px var(--bg-secondary); }
+.tl-dot.food    { background: var(--tint-red); }
+.tl-dot.spot    { background: var(--tint-blue); }
+.tl-dot.hotel   { background: var(--tint-orange); }
+.tl-dot.drink   { background: var(--tint-purple); }
+.tl-dot.transport { background: var(--text-tertiary); }
+
+.card { background: var(--bg-elevated); border-radius: var(--radius-md); padding: 14px 16px; box-shadow: var(--shadow-sm); transition: box-shadow .25s ease; cursor: pointer; }
+.card:active { box-shadow: var(--shadow-md); }
+.card .time { font-size: 12px; font-weight: 600; color: var(--text-tertiary); letter-spacing: .01em; }
+.card .name { font-size: 17px; font-weight: 600; margin: 2px 0 4px; letter-spacing: -0.01em; display: flex; align-items: center; gap: 6px; }
+.card .desc { font-size: 14px; color: var(--text-secondary); line-height: 1.45; }
+
+.badge { display: inline-flex; align-items: center; font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 4px; }
+.badge.food   { background: rgba(255,59,48,.1);  color: var(--tint-red); }
+.badge.spot   { background: rgba(0,122,255,.1);  color: var(--tint-blue); }
+.badge.drink  { background: rgba(175,82,222,.1); color: var(--tint-purple); }
+
+.budget { display: inline-block; margin-top: 6px; padding: 3px 10px; background: var(--bg-grouped); border-radius: var(--radius-sm); font-size: 12px; color: var(--text-secondary); font-weight: 500; }
+
+.pays { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 6px; }
+.pay { font-size: 11px; padding: 2px 7px; border-radius: 4px; font-weight: 600; }
+.pay.ok  { background: rgba(52,199,89,.1);  color: var(--tint-green); }
+.pay.no  { background: rgba(255,59,48,.08); color: var(--tint-red); }
+.pay.idk { background: rgba(255,149,0,.1);  color: var(--tint-orange); }
+
+.links { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 8px 14px; border-radius: var(--radius-sm);
+  font-size: 13px; font-weight: 600; border: none; cursor: pointer;
+  text-decoration: none !important; transition: filter .2s;
+}
+.btn:active { filter: brightness(.9); }
+.btn.nav    { background: var(--accent); color: #fff; }
+.btn.xhs    { background: #ff2442; color: #fff; }
+.btn.dp     { background: #ffa700; color: #fff; }
+.btn.rsv    { background: var(--tint-green); color: #fff; }
+
+.as-overlay {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(0,0,0,.35); backdrop-filter: blur(2px);
+  display: flex; align-items: flex-end; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity .25s;
+}
+.as-overlay.show { opacity: 1; pointer-events: auto; }
+.as-sheet {
+  width: 100%; max-width: 420px;
+  padding: 0 8px 34px;
+  transform: translateY(100%); transition: transform .3s cubic-bezier(.22,1,.36,1);
+}
+.as-overlay.show .as-sheet { transform: translateY(0); }
+.as-group {
+  background: rgba(255,255,255,.88); backdrop-filter: blur(20px);
+  border-radius: 14px; overflow: hidden; margin-bottom: 8px;
+}
+.as-group .as-item {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 16px; font-size: 18px; color: #007aff; font-weight: 500;
+  border: none; background: none; width: 100%; cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.as-group .as-item + .as-item { border-top: .5px solid rgba(0,0,0,.12); }
+.as-group .as-item:active { background: rgba(0,0,0,.06); }
+.as-cancel { font-weight: 600; }
+
+.details {
+  margin-top: 10px; padding-top: 10px;
+  border-top: .5px solid var(--separator);
+  font-size: 13px; color: var(--text-secondary); line-height: 1.6;
+}
+.details.closed { display: none; }
+
+.day-list .card { margin-bottom: 8px; }
+.day-list .card .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
+
+.pay-summary { background: var(--bg-elevated); border-radius: var(--radius-md); padding: 14px 16px; box-shadow: var(--shadow-sm); font-size: 13px; line-height: 1.7; margin-bottom: 10px; }
+.pay-summary h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.pay-summary .warn { color: var(--tint-red); }
+.pay-summary .ok-text { color: var(--tint-green); }
+
+.legend { display: flex; gap: 14px; flex-wrap: wrap; padding: 8px 0; font-size: 12px; color: var(--text-secondary); }
+.legend-item { display: flex; align-items: center; gap: 5px; }
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+.leaflet-popup-content-wrapper { border-radius: var(--radius-md) !important; box-shadow: var(--shadow-lg) !important; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif !important; }
+.leaflet-popup-content { font-size: 14px !important; line-height: 1.5 !important; margin: 12px 14px !important; }
+.leaflet-popup-content a { color: var(--accent) !important; }
+.leaflet-popup-tip { background: #fff !important; }
+.leaflet-control-zoom a { width: 34px !important; height: 34px !important; line-height: 34px !important; font-size: 16px !important; border-radius: 10px !important; background: rgba(255,255,255,.85) !important; -webkit-backdrop-filter: blur(10px) !important; backdrop-filter: blur(10px) !important; border: .5px solid var(--separator) !important; color: var(--text-primary) !important; }
+.leaflet-control-zoom { border-radius: 12px !important; overflow: hidden; box-shadow: var(--shadow-md) !important; border: none !important; }
+.leaflet-control-attribution { font-size: 9px !important; opacity: .5; }
+</style>
+</head>
+<body>
+
+<div id="map"></div>
+<div class="tabs" id="tabs"></div>
+<div class="content" id="content"></div>
+
+<script>
+const HOTEL = { name: '釜山乐天酒店 Lotte Hotel', lat: 35.1542, lng: 129.0577 };
+
+const DAYS = [
+  { id: 0, label: '总览', color: '#0071e3', locations: [] },
+  {
+    id: 1, label: 'D1', date: '9/3 周四', title: '抵达·西面美发购物', color: '#ff9500',
+    locations: [
+      { name: '釜山金海机场', lat: 35.1735, lng: 128.9385, type: 'transport', time: '11:35', desc: 'MU5043 浦东08:10→釜山11:35', detail: '机场Limousine Bus直达乐天酒店门口\n约6000韩元/人，50分钟', pay: { cash: 1, card: 1 } },
+      { name: '釜山乐天酒店 check-in 🏨', lat: 35.1542, lng: 129.0577, type: 'hotel', time: '13:00', desc: '5星豪华酒店，与乐天百货直通，距西面站400m', detail: '772 Gaya-daero 釜山镇区\n与乐天百货直接连通\n距西面站步行5分钟\n放行李+换韩币+买T-money卡\n室外泳池/Spa/12家餐厅', pay: { card: 1 } },
+      { name: '맛찬들왕소금구이（味赞王盐烤）', lat: 35.1555, lng: 129.0600, type: 'food', time: '13:45', desc: 'Tripadvisor釜山第27名！盐烤五花肉+护心肉专门店，全程帮烤', budget: '₩18,000-25,000/人 ≈ ¥99-137', detail: '招牌：소금구이(盐烤五花肉)+갈비살(护心肉)\n全程店员帮烤，火候完美\n小菜无限续\n西面店，乐天酒店步行5分钟\n4.3分 88条好评', pay: { cash: 1, card: 1 }, xhsKeyword: '맛찬들왕소금구이 釜山西面' },
+      { name: 'JUNO Hair 西面店', lat: 35.1575, lng: 129.0610, type: 'spot', time: '15:30', desc: '韩式剪发/烫发，江南无忧小程序预约', budget: '₩30,000-150,000', detail: '4人需分2批或同时约2位设计师\n建议提前1-2周预约\n剪发3-5万韩元，烫发8-15万韩元', pay: { card: 1 }, xhsKeyword: 'JUNO Hair 釜山西面' },
+      { name: 'OLIVE YOUNG 西面店', lat: 35.1565, lng: 129.0605, type: 'spot', time: '18:30', desc: '韩国美妆最大门店，面膜彩妆囤货', detail: '现场退税，满3万韩元可退\n推荐：Mediheal面膜、Torriden精华', pay: { card: 1, alipay: 0.5 }, xhsKeyword: 'OLIVE YOUNG 釜山西面' },
+      { name: '막창꽃필무렵（烤皱胃+盐烤猪皮）', lat: 35.1572, lng: 129.0625, type: 'food', time: '19:30', desc: '池昌旭同款！烤猪皱胃+盐烤猪皮，秘制果酒', budget: '₩20,000/人 ≈ ¥110', detail: '招牌：막창(烤猪皱胃)+소금껍데기(盐烤猪皮)\n蘸秘制酱汁+生菜包着吃\n配自制果酒绝了\n西面전포동', pay: { cash: 1, card: 1 }, xhsKeyword: '막창꽃필무렵 釜山西面' },
+      { name: '布帐马车夜市', lat: 35.1562, lng: 129.0600, type: 'drink', time: '21:00', desc: '西面站旁露天小吃摊，炒年糕/鱼饼/米酒', budget: '₩5,000/人 ≈ ¥28', pay: { cash: 1 } }
+    ]
+  },
+  {
+    id: 2, label: 'D2', date: '9/4 周五', title: '滑车·海岸列车·夜景', color: '#007aff',
+    locations: [
+      { name: '酒店出发（打车）', lat: 35.1542, lng: 129.0577, type: 'transport', time: '09:10', desc: '打车直奔Osiria，约45min', detail: '乐天酒店→Skyline Luge\n约25-30km，早高峰后路况OK\n打车费约₩25,000-30,000\n9:10出发保证10:00到达' },
+      { name: 'Skyline Luge 斜坡滑车 🎟️', lat: 35.2440, lng: 129.2270, type: 'spot', time: '10:00', desc: '新西兰斜坡滑车，4条跑道总长2.4km惊险刺激', budget: '3次₩25,000/5次₩35,000 ≈ ¥137-192', detail: '来自新西兰的冒险项目\n4条跑道总长2.4km\n简单操控，老少皆宜\n10:00-18:00（17:30停入）\nKlook可预订\nBusan Pass可覆盖', pay: { card: 1 }, xhsKeyword: '釜山SkylineLuge斜坡滑车' },
+      { name: '미포집（尾浦家）酱海鲜锅', lat: 35.1625, lng: 129.1775, type: 'food', time: '12:00', desc: '胶囊列车Mipo站步行5min！8种酱海鲜+石锅饭，生腌爱好者狂喜', budget: '₩35,000/人 ≈ ¥192', detail: '招牌：酱海鲜锅定食（2人起）\n8种海鲜：虾/蟹/鲍鱼/海螺/三文鱼/章鱼等\n配石锅饭+12种小菜+海带汤\n蘸蛋黄鱼籽酱吃绝了\n11:00-15:00, 17:00-20:00\n⚠️11:30前去避开排队\n距Mipo胶囊站步行5分钟', pay: { cash: 1, card: 1 }, xhsKeyword: '미포집 釜山尾浦海鲜' },
+      { name: '海云台蓝线胶囊列车', lat: 35.1622, lng: 129.1750, type: 'spot', time: '14:00', desc: 'Mipo→Cheongsapo海边胶囊小火车', budget: '₩7,000-15,000/人', detail: '⚠️必须提前1-2周在官网预约\nbluelinepark.com\n选Mipo→Cheongsapo方向\n约30分钟车程\n吃完午餐步行5min到Mipo站', pay: { card: 1 }, xhsKeyword: '釜山胶囊小火车预约' },
+      { name: '海岸列车（青沙浦→松亭）🎟️', lat: 35.1635, lng: 129.1830, type: 'spot', time: '14:45', desc: '开放式海岸列车，青沙浦→松亭，海景无敌', budget: '₩7,000-10,000/人', detail: '胶囊到青沙浦后换乘海岸列车\n开放式车厢拍照更自由\nCheongsapo→松亭约20分钟\nBusan Pass可覆盖', pay: { card: 1 }, xhsKeyword: '釜山海岸列车BlueLine' },
+      { name: '新世界Centum City', lat: 35.1691, lng: 129.1298, type: 'spot', time: '16:00', desc: '世界最大百货，免税店+Spa Land温泉 🎟️', detail: '地铁2号线Centum City站直达\n3楼免税店有中文导购\nSpa Land ₩15,000/人（Busan Pass A组）\nB1美食层解决晚餐', pay: { card: 1, alipay: 0.5 }, xhsKeyword: '釜山新世界Centum City' },
+      { name: 'X the Sky 观景台 🎟️', lat: 35.1610, lng: 129.1640, type: 'spot', time: '18:00', desc: '韩国最高观景台(411.6m)！黄昏夜景绝美，98-100F透明玻璃桥', budget: '₩27,000/人 ≈ ¥148', detail: 'LCT Land Mark Tower 98-100F\n透明玻璃桥震撼体验\n全球最高星巴克(99F)\n10:00-21:00（20:30停售）\n傍晚+夜景黄金时段！\nBusan Pass可覆盖', pay: { card: 1 }, xhsKeyword: '釜山XtheSky观景台' },
+      { name: 'Holic游艇', lat: 35.1550, lng: 129.1550, type: 'spot', time: '19:30', desc: '夜游艇海上体验！配茶点啤酒，看海云台夜景', budget: '₩25,000-35,000/人 ≈ ¥137-192', detail: '从海云台수영요트경기장出发\n含茶点+啤酒或饮料\n4人包船or拼团可选\nKlook/yachtholic.com预订\n可携宠物\n夜间出航看海岸线灯火超浪漫', pay: { card: 1 }, xhsKeyword: '釜山Holic游艇YachtHolic' },
+      { name: 'SOLSOT釜饭（솔솥）', lat: 35.1695, lng: 129.1305, type: 'food', time: '20:30', desc: '米其林级釜饭！一饭两吃（先拌饭后加高汤）', budget: '₩20,000/人 ≈ ¥110', detail: '招牌：돌솥밥(石锅釜饭)\n吃法：先吃原味拌饭→加高汤变粥\n配小菜10+种\n米其林推荐餐厅\nCentum City附近有分店', pay: { cash: 1, card: 1 }, xhsKeyword: 'SOLSOT솔솥釜山釜饭' }
+    ]
+  },
+  {
+    id: 3, label: 'D3', date: '9/5 周六', title: '平山书店·甘川·韩牛庆祝', color: '#af52de',
+    locations: [
+      { name: '釜山站', lat: 35.1152, lng: 129.0410, type: 'transport', time: '07:45', desc: '地铁1号线西面→釜山站，搭KTX', detail: 'KTX釜山→蔚山\n票价₩8,700/人，约25min\nKorail App或Let\'s Korail购票', pay: { card: 1 } },
+      { name: '蔚山站(打车)', lat: 35.5630, lng: 129.1840, type: 'transport', time: '08:30', desc: '出站2/3出口打车至平山书店', detail: '出租车约20分钟\n车费约₩17,000\n可请司机打表', pay: { cash: 1, card: 1 } },
+      { name: '평산책방（平山书店）', lat: 35.4350, lng: 129.0450, type: 'spot', time: '09:30', desc: '前总统文在寅经营的乡村书店，10点开门', detail: '韩国最美乡村书店\n10:00开门，周一闭店\n周末11点文在寅常到店\n可买签名书作伴手礼\n逛1.5-2小时', budget: '出租车往返₩34,000', pay: { cash: 1, card: 1 }, xhsKeyword: '釜山平山书店文在寅' },
+      { name: '감천 아지매 밥집（甘泉小吃店）', lat: 35.0975, lng: 129.0120, type: 'food', time: '13:00', desc: '甘川文化村内！青花鱼定食+泥鳅汤，本地老奶奶经营', budget: '₩10,000-15,000/人 ≈ ¥55-82', detail: '招牌：青花鱼定食(고등어정식)\n青花鱼泥鳅汤也是特色\n甘川文化村内的本地小店\n老奶奶经营，味道地道\n10:00-18:00\n吃完直接进甘川文化村逛', pay: { cash: 1, card: 0 }, xhsKeyword: '감천아지매밥집 甘川' },
+      { name: '甘川文化村 🎟️', lat: 35.0986, lng: 129.0136, type: 'spot', time: '14:00', desc: '彩色童话村，小王子雕像，下午光线绝美', detail: '地铁1号线土城站+公交2-2/2-2-2\n小王子拍照需排队\n入口买集章地图₩2,000\nBusan Pass B组\n逛1.5小时', pay: { cash: 1 }, xhsKeyword: '釜山甘川文化村' },
+      { name: 'BIFF广场', lat: 35.0991, lng: 129.0262, type: 'spot', time: '15:30', desc: '电影街氛围，糖饼+小吃快闪', detail: '釜山国际电影节主场地\n糖饼(호떡)₩1,500必吃\n手印地砖可以找明星', pay: { cash: 1, card: 1 }, xhsKeyword: '釜山BIFF广场' },
+      { name: '国际市场+乐天免税店', lat: 35.1008, lng: 129.0280, type: 'spot', time: '16:00', desc: '复古小物/伴手礼+免税采购', detail: '国际市场：复古杂货、韩式餐具\n富平罐头市场：零食、干货伴手礼\n乐天免税店：免税+退税\n现金为主(市场)，乐天可支付宝', pay: { cash: 1, card: 1, alipay: 0.5 }, xhsKeyword: '釜山国际市场乐天' },
+      { name: '사랑과평화（爱与和平韩牛）', lat: 35.1580, lng: 129.0630, type: 'food', time: '19:30', desc: '1++顶级韩牛！独立隔间，全程帮烤，闺蜜庆祝首选', budget: '₩40,000-60,000/人 ≈ ¥220-330', detail: '1++等级韩牛专门店\n独立隔间，全程店员帮烤\n配上等烧酒/啤酒\n⚠️建议提前预约\n旅途收官庆祝！', pay: { cash: 1, card: 1 }, xhsKeyword: '사랑과평화釜山韩牛' }
+    ]
+  },
+  {
+    id: 4, label: 'D4', date: '9/6 周日', title: '早午餐·皮肤科·返程', color: '#34c759',
+    locations: [
+      { name: '포항돼지국밥（浦项猪肉汤饭）', lat: 35.1560, lng: 129.0585, type: 'food', time: '09:30', desc: '西面猪肉汤饭一条街名店！24h营业，猪骨慢熬清汤+无限小菜', budget: '₩8,000-10,000/人 ≈ ¥44-55', detail: '招牌：돼지국밥(猪肉汤饭)\n猪骨慢熬高汤，汤头微鲜无腥味\n搭配无限续加的泡菜/韭菜/辣萝卜\n还有白切肉套餐和血肠汤饭\n24小时营业\n西面猪肉汤饭一条街\n釜山排名第18，4.2分', pay: { cash: 1, card: 1 }, xhsKeyword: '포항돼지국밥 釜山西面猪肉汤饭' },
+      { name: 'OLIVE YOUNG 西面店', lat: 35.1565, lng: 129.0605, type: 'spot', time: '10:30', desc: '美妆最后一波囤货，现场退税', detail: '现场退税，满3万韩元可退\n推荐：Mediheal面膜、Torriden精华\n买够再走！', pay: { card: 1, alipay: 0.5 }, xhsKeyword: 'OLIVE YOUNG 釜山西面' },
+      { name: 'JRYN皮肤科 西面总店', lat: 35.1580, lng: 129.0590, type: 'spot', time: '11:30', desc: '皮肤管理+小颜矫正，做完刚好回国恢复', budget: '₩30,000-100,000', detail: 'BeautsGO App预约，选中文客服\n做完后当日避免暴晒\n水光针5-10万韩元\n皮肤管理3-8万韩元\n约1.5-2小时', pay: { card: 1 }, xhsKeyword: '釜山JRYN皮肤科' },
+      { name: '回酒店整理行李', lat: 35.1542, lng: 129.0577, type: 'hotel', time: '13:30', desc: '退房+收拾，准备出发', detail: '做完皮肤刚好回房间整理\n退房寄存行李或直接出发' },
+      { name: '酒店出发 → 机场', lat: 35.1542, lng: 129.0577, type: 'transport', time: '14:20', desc: 'Limousine Bus西面→机场约50min', detail: '提前至14:20出发\nLimousine Bus约50min\n确保15:30前到达机场', pay: { cash: 1, card: 1 } },
+      { name: '釜山金海机场', lat: 35.1735, lng: 128.9385, type: 'transport', time: '15:30', desc: 'FM830 釜山17:50→浦东18:40', detail: '提前2hr到达\n退税在海关盖章后办理\n17:50起飞', pay: { cash: 1, card: 1 } }
+    ]
+  }
+];
+
+function overviewContent() {
+  return `
+<div class="hero"><h1>釜山闺蜜4日行</h1><p class="subtitle">9/3-9/6 · 上海直飞 · 海景+美容+美食+购物</p></div>
+<div class="info-grid">
+  <div class="info-card"><div class="label">酒店</div><div class="value">釜山乐天酒店<br><span style="font-size:12px;color:var(--text-secondary)">5星·与乐天百货直通·西面站5min</span></div></div>
+  <div class="info-card"><div class="label">航班</div><div class="value">去 MU5043 08:10→11:35<br>回 FM830 17:50→18:40</div></div>
+  <div class="info-card"><div class="label">交通卡</div><div class="value">T-money<br><span style="font-size:12px;color:var(--text-secondary)">机场买，充₩20,000</span></div></div>
+  <div class="info-card"><div class="label">预估人均</div><div class="value">¥4,400-8,500<br><span style="font-size:12px;color:var(--text-secondary)">不含购物</span></div></div>
+</div>
+<div class="section-head">行程概览</div>
+<div class="day-list">${DAYS.slice(1).map(d=>`<div class="card" onclick="go(${d.id})"><div class="name"><span class="dot" style="background:${d.color}"></span>${d.label} · ${d.title}</div><div class="desc">${d.date}</div></div>`).join('')}</div>
+<div class="section-head">提前预约</div>
+<div class="pay-summary"><h4>⚠️ 必须提前订</h4>
+<div>1. <strong>胶囊小火车</strong> — bluelinepark.com，提前1-2周，旺季秒没</div>
+<div>2. <strong>JUNO Hair</strong> — 江南无忧小程序预约，4人分批</div>
+<div>3. <strong>JRYN皮肤科</strong> — BeautsGO App，选中文客服时段（D4）</div>
+<div>4. <strong>KTX釜山↔蔚山</strong> — Korail App，D3去平山书店</div>
+<div>5. <strong>사랑과평화韩牛</strong> — 电话/Naver预约，D3庆祝餐（周末难订）</div>
+<div>6. <strong>Holic游艇</strong> — Klook/yachtholic.com，选时段（D2）</div>
+<div>7. <strong>Skyline Luge</strong> — Klook可预订，选3次/5次通票（D2）</div>
+</div>
+<div class="section-head">Visit Busan Pass 🎟️</div>
+<div class="pay-summary"><h4>🎟️ 行程中可用 Pass 的景点</h4>
+<div><strong>Spa Land 温泉</strong>（D2）— A组，原价₩15,000</div>
+<div><strong>X the Sky 观景台</strong>（D2）— A组，原价₩27,000</div>
+<div><strong>海岸列车</strong>（D2）— B组，原价₩7,000</div>
+<div><strong>Skyline Luge</strong>（D2）— B组，原价₩25,000</div>
+<div><strong>甘川文化村</strong>（D3）— B组，原价₩5,000</div>
+<div style="margin-top:4px">推荐：升级 <strong>BIG5票券</strong> ¥295，5个景点全回本（原价超₩79,000）</div>
+<div style="color:var(--text-tertiary);font-size:12px">购买：金海机场 / Centum City B1 / visitbusanpass.com</div>
+</div>
+<div class="section-head">支付提醒</div>
+<div class="pay-summary"><h4>💳 支付方式</h4>
+<div><span class="ok-text">✓ 信用卡</span> — 大部分商店/餐厅接受Visa/Master</div>
+<div><span class="ok-text">✓ 支付宝</span> — OLIVE YOUNG/新世界/乐天部分支持</div>
+<div><span class="warn">⚠️ 现金</span> — 市场/小吃摊/布帐马车需现金(韩元)</div>
+<div><span class="warn">⚠️ 换钱</span> — 机场换少量，西面换钱所汇率更好</div>
+</div>
+<div class="section-head">图例</div>
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--tint-red)"></div>餐厅</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--tint-blue)"></div>景点</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--tint-purple)"></div>酒吧</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--tint-orange)"></div>酒店</div>
+</div>`;
+}
+
+// ══════════ ENGINE ══════════
+
+const map = L.map('map', { center: [HOTEL.lat, HOTEL.lng], zoom: 12, zoomControl: false, attributionControl: true });
+L.control.zoom({ position: 'topright' }).addTo(map);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { maxZoom: 19 }).addTo(map);
+
+const LocateControl = L.Control.extend({
+  options: { position: 'bottomright' },
+  onAdd() {
+    const btn = L.DomUtil.create('button', 'locate-btn');
+    btn.innerHTML = '📍';
+    btn.title = '我的位置';
+    L.DomEvent.disableClickPropagation(btn);
+    btn.addEventListener('click', () => {
+      btn.classList.add('active');
+      map.locate({ setView: true, maxZoom: 15 });
+    });
+    this._btn = btn;
+    return btn;
+  }
+});
+new LocateControl().addTo(map);
+let locMarker, locCircle;
+map.on('locationfound', e => {
+  const r = e.accuracy / 2;
+  if (locMarker) { locMarker.setLatLng(e.latlng); locCircle.setLatLng(e.latlng).setRadius(r); }
+  else {
+    locMarker = L.marker(e.latlng, {
+      icon: L.divIcon({ className:'', html:'<div style="width:14px;height:14px;border-radius:50%;background:#007aff;border:2.5px solid #fff;box-shadow:0 0 6px rgba(0,122,255,.5)"></div><div class="loc-pulse" style="position:absolute;top:0;left:0"></div>', iconSize:[14,14], iconAnchor:[7,7] }),
+      zIndexOffset: 2000
+    }).addTo(map);
+    locCircle = L.circle(e.latlng, { radius: r, color: '#007aff', fillColor: '#007aff', fillOpacity: .08, weight: 1 }).addTo(map);
+  }
+});
+map.on('locationerror', () => {});
+
+function icon(color, emoji) {
+  return L.divIcon({ className: '', html: `<div style="width:28px;height:28px;border-radius:50%;background:${color};border:2.5px solid #fff;display:flex;align-items:center;justify-content:center;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.18)">${emoji||''}</div>`, iconSize: [28,28], iconAnchor: [14,14], popupAnchor: [0,-16] });
+}
+
+if (HOTEL.lat) L.marker([HOTEL.lat, HOTEL.lng], { icon: icon('#ff9500','🏨'), zIndexOffset: 1000 }).addTo(map).bindPopup(`<b>${HOTEL.name}</b>`);
+
+let markers = [], polylines = [];
+const emojis = { food:'🍽️', spot:'📍', hotel:'🏨', transport:'🚃', drink:'🍺' };
+
+function clearMap() { markers.forEach(m=>map.removeLayer(m)); polylines.forEach(p=>map.removeLayer(p)); markers=[]; polylines=[]; }
+
+function showDay(idx) {
+  clearMap();
+  if (idx === 0) {
+    const pts = [];
+    DAYS.forEach(d => d.locations.forEach(l => { if(l.lat) pts.push([l.lat,l.lng]); }));
+    if(pts.length) map.fitBounds(pts, {padding:[30,30]});
+    DAYS.slice(1).forEach(d => {
+      d.locations.filter(l=>l.time!=='—').forEach(l => {
+        const m = L.circleMarker([l.lat,l.lng], { radius:4, fillColor:d.color, color:'#fff', weight:1.5, fillOpacity:.9 }).addTo(map).bindPopup(`<b>${l.name}</b><br><span style="color:#86868b">${d.label}</span>`);
+        markers.push(m);
+      });
+    });
+    return;
+  }
+  const day = DAYS.find(d=>d.id===idx);
+  if(!day) return;
+  const coords = [];
+  day.locations.forEach(l => {
+    if(!l.lat) return;
+    const m = L.marker([l.lat,l.lng], { icon: icon(day.color, emojis[l.type]||'📌') }).addTo(map);
+    const gmapQ = l.gmap||encodeURIComponent(l.name+' Busan Korea');
+    m.bindPopup(`<b>${l.name}</b>${l.time!=='—'?'<br><span style="color:#86868b">'+l.time+'</span>':''}<br>${l.desc}${l.budget?'<br><span style="color:#ff9500">'+l.budget+'</span>':''}<br><a href="#" onclick="event.preventDefault();openAS('${l.name.replace(/'/g,"\\'")}',${l.lat},${l.lng},'${gmapQ}')">📍 导航</a>${l.xhs?' · <a href="'+l.xhs+'" target="_blank">📕 小红书</a>':''}`);
+    markers.push(m);
+    if(l.time!=='—') coords.push([l.lat,l.lng]);
+  });
+  if(coords.length>1) { const pl = L.polyline(coords, { color:day.color, weight:2.5, opacity:.5, dashArray:'6,5' }).addTo(map); polylines.push(pl); }
+  if(coords.length) map.fitBounds(coords, { padding:[40,40], maxZoom:14 });
+}
+
+function payChips(pay) {
+  if(!pay) return '';
+  let h = '<div class="pays">';
+  const m = { cash:'💴', card:'💳', alipay:'支付宝', wechat:'微信' };
+  for(const [k,label] of Object.entries(m)) {
+    if(pay[k]!==undefined) { const c = pay[k]===1?'ok':pay[k]===0.5?'idk':'no'; h += `<span class="pay ${c}">${label}</span>`; }
+  }
+  return h+'</div>';
+}
+
+const IN_APP_WEBVIEW = (() => {
+  const ua = (navigator.userAgent || '').toLowerCase();
+  return /micromessenger|xhs|xhsdiscover|discover\/|tiktok|aweme|weibo|qq\/|qqbrowser|alipayclient|dingtalk|lark|feishu|ucbrowser|baiduboxapp|toutiao|newsarticle/.test(ua);
+})();
+
+function xhsKeyword(loc) {
+  if(loc.xhsKeyword) return loc.xhsKeyword.trim();
+  return (loc.name||'').replace(/⭐.*$/g,'').replace(/（.*?）/g,'').replace(/\(.*?\)/g,'').replace(/\s+/g,' ').trim();
+}
+function xhsAppUrl(loc) { return `xhsdiscover://search/result?keyword=${encodeURIComponent(xhsKeyword(loc))}&target_search=notes&source=deeplink`; }
+function xhsWebUrl(loc) { return `https://www.xiaohongshu.com/search_result?keyword=${encodeURIComponent(xhsKeyword(loc))}&source=web_explore_feed`; }
+
+function dpKeyword(loc) {
+  if(loc.dianpingKeyword) return loc.dianpingKeyword.trim();
+  return (loc.name||'').replace(/⭐.*$/g,'').replace(/（.*?）/g,'').replace(/\(.*?\)/g,'').replace(/\s+/g,' ').trim();
+}
+function dpAppUrl(loc) { return `dianping://searchshoplist?keyword=${encodeURIComponent(dpKeyword(loc))}`; }
+function dpWebUrl(loc) { return `https://m.dianping.com/searchshop?keyword=${encodeURIComponent(dpKeyword(loc))}`; }
+
+window._extLocs = {};
+DAYS.forEach(d => d.locations.forEach(l => { window._extLocs[`${d.id}::${l.name}`] = l; }));
+window._xhsLocs = window._extLocs;
+
+function openExt(key, kind) {
+  const loc = window._extLocs[key]; if(!loc) return false;
+  if (IN_APP_WEBVIEW) {
+    window.location.href = kind==='dp' ? dpWebUrl(loc) : xhsWebUrl(loc);
+  } else {
+    window.location.href = kind==='dp' ? dpAppUrl(loc) : xhsAppUrl(loc);
+  }
+  return false;
+}
+function openXhs(key) { return openExt(key, 'xhs'); }
+function openDp(key)  { return openExt(key, 'dp'); }
+
+function locCard(loc, dayIdx) {
+  const dot = loc.type==='food'?'food':loc.type==='spot'?'spot':loc.type==='drink'?'drink':loc.type==='hotel'?'hotel':'transport';
+  const bdg = loc.type==='food'?'<span class="badge food">餐</span>':loc.type==='spot'?'<span class="badge spot">景</span>':loc.type==='drink'?'<span class="badge drink">饮</span>':'';
+  const uid = `d${dayIdx}-${loc.name.replace(/\W/g,'')}`;
+  const locKey = `${dayIdx}::${loc.name}`;
+  const gmapQ = loc.gmap||encodeURIComponent(loc.name+' Busan Korea');
+  let lnk = `<button class="btn nav" onclick="openAS('${loc.name.replace(/'/g,"\\'")}',${loc.lat},${loc.lng},'${gmapQ}')">📍 导航</button>`;
+  if(loc.xhs||loc.xhsKeyword) {
+    const xhsHref = IN_APP_WEBVIEW ? xhsWebUrl(loc) : xhsAppUrl(loc);
+    const xhsLabel = IN_APP_WEBVIEW ? '📕 小红书' : '📕 小红书 App';
+    lnk += `<a href="${xhsHref}" onclick="return openXhs('${locKey.replace(/'/g,"\\'")}')" class="btn xhs">${xhsLabel}</a>`;
+  }
+  const dpEnabled = loc.dianping !== false &&
+    (loc.dianping || loc.dianpingKeyword || loc.type==='food' || loc.type==='drink');
+  if(dpEnabled) {
+    const dpHref = IN_APP_WEBVIEW ? dpWebUrl(loc) : dpAppUrl(loc);
+    const dpLabel = IN_APP_WEBVIEW ? '🍜 大众点评' : '🍜 大众点评 App';
+    lnk += `<a href="${dpHref}" onclick="return openDp('${locKey.replace(/'/g,"\\'")}')" class="btn dp">${dpLabel}</a>`;
+  }
+  if(loc.reserve) lnk += `<a href="${loc.reserve}" target="_blank" class="btn rsv">📅 预约</a>`;
+  return `<div class="tl-item"><div class="tl-dot ${dot}"></div><div class="card" onclick="if(!event.target.closest('.btn,.links'))toggle('${uid}')"><div class="time">${loc.time!=='—'?loc.time:'备选'}</div><div class="name">${bdg} ${loc.name}</div><div class="desc">${loc.desc}</div>${loc.budget?'<div class="budget">'+loc.budget+'</div>':''}${payChips(loc.pay)}<div class="links">${lnk}</div>${loc.detail?'<div class="details" id="'+uid+'">'+loc.detail.replace(/\n/g,'<br>')+'</div>':''}</div></div>`;
+}
+
+function renderDay(idx) {
+  const d = DAYS.find(x=>x.id===idx); if(!d) return '';
+  const main = d.locations.filter(l=>l.time!=='—');
+  const alt = d.locations.filter(l=>l.time==='—');
+  let h = `<div class="day-head"><h2>${d.title}</h2><p>${d.date}</p></div>`;
+  if(main.length) { h += '<div class="section-head">行程</div><div class="timeline">'; main.forEach(l => h += locCard(l, idx)); h += '</div>'; }
+  if(alt.length) { h += '<div class="section-head">备选</div><div class="timeline">'; alt.forEach(l => h += locCard(l, idx)); h += '</div>'; }
+  return h;
+}
+
+let cur = 0;
+const tabsEl = document.getElementById('tabs');
+const contentEl = document.getElementById('content');
+
+DAYS.forEach(d => {
+  const btn = document.createElement('button');
+  btn.className = 'tab' + (d.id===0?' active':'');
+  btn.dataset.day = d.id;
+  btn.textContent = d.label;
+  tabsEl.appendChild(btn);
+});
+
+function go(idx) {
+  cur = idx;
+  tabsEl.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', +t.dataset.day===idx));
+  contentEl.innerHTML = idx===0 ? overviewContent() : renderDay(idx);
+  showDay(idx);
+  contentEl.scrollTo({top:0});
+  const tab = tabsEl.querySelector(`[data-day="${idx}"]`);
+  if(tab) tab.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+}
+
+function toggle(id) { const el=document.getElementById(id); if(el) el.classList.toggle('closed'); }
+
+tabsEl.addEventListener('click', e => { const t=e.target.closest('.tab'); if(t) go(+t.dataset.day); });
+
+go(0);
+
+const asOverlay = document.createElement('div');
+asOverlay.className = 'as-overlay';
+asOverlay.innerHTML = `<div class="as-sheet">
+  <div class="as-group" id="as-opts"></div>
+  <div class="as-group"><button class="as-item as-cancel" onclick="closeAS()">取消</button></div>
+</div>`;
+document.body.appendChild(asOverlay);
+asOverlay.addEventListener('click', e => { if (e.target === asOverlay) closeAS(); });
+
+const IS_IOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+function amapAppUrl(name, lat, lng) {
+  const scheme = IS_IOS ? 'iosamap' : 'androidamap';
+  return `${scheme}://viewMap?sourceApplication=trip&poiname=${encodeURIComponent(name)}&lat=${lat}&lon=${lng}&dev=0`;
+}
+function amapWebUrl(name, lat, lng) {
+  return `https://uri.amap.com/marker?position=${lng},${lat}&name=${encodeURIComponent(name)}&src=trip&coordinate=wgs84&callnative=1`;
+}
+function openAmap(name, lat, lng) {
+  if (IN_APP_WEBVIEW) { window.open(amapWebUrl(name, lat, lng)); return; }
+  window.location.href = amapAppUrl(name, lat, lng);
+}
+
+function openAS(name, lat, lng, gmap) {
+  const q = gmap || encodeURIComponent(name + ' Busan Korea');
+  const encName = encodeURIComponent(name);
+  const safeName = name.replace(/'/g,"\\'");
+  const appleUrl = IN_APP_WEBVIEW
+    ? `https://maps.apple.com/?q=${lat},${lng}&ll=${lat},${lng}&name=${encName}`
+    : `maps://maps.apple.com/?q=${lat},${lng}&name=${encName}`;
+  const googleUrl = `https://www.google.com/maps/search/?api=1&query=${q}`;
+  document.getElementById('as-opts').innerHTML =
+    `<button class="as-item" onclick="window.open('${appleUrl}');closeAS()">🍎 Apple Maps</button>` +
+    `<button class="as-item" onclick="window.open('${googleUrl}');closeAS()">🗺️ Google Maps</button>` +
+    `<button class="as-item" onclick="openAmap('${safeName}',${lat},${lng});closeAS()">🧭 高德地图 App</button>`;
+  asOverlay.classList.add('show');
+}
+function closeAS() { asOverlay.classList.remove('show'); }
+</script>
+</body>
+</html>
