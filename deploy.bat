@@ -1,8 +1,8 @@
 @echo off
 chcp 65001 >nul 2>&1
 echo ========================================
-echo   釜山行程 - 部署到 Netlify
-echo   https://busan0903.netlify.app
+echo   釜山行程 - 部署到 GitHub Pages
+echo   https://mcg62bzw7t-cell.github.io/busan-trip/
 echo ========================================
 echo.
 
@@ -19,17 +19,17 @@ if %errorlevel%==0 (
     echo [OK] Git 提交完成
 )
 
-:: Netlify 部署
-echo [INFO] 正在部署到 Netlify...
-netlify deploy --prod --dir=. 2>&1
+:: Git 推送（push 后 GitHub Actions 自动部署）
+echo [INFO] 推送到 GitHub，自动触发 Pages 部署...
+git push 2>&1
 if %errorlevel%==0 (
     echo.
     echo ========================================
-    echo   部署成功！
-    echo   https://busan0903.netlify.app
+    echo   推送成功！1-2分钟后生效
+    echo   https://mcg62bzw7t-cell.github.io/busan-trip/
     echo ========================================
 ) else (
-    echo [ERROR] 部署失败，请检查错误信息
+    echo [ERROR] 推送失败，请检查错误信息
 )
 
 pause
