@@ -92,6 +92,11 @@ a:hover { text-decoration: underline; }
 .hero { text-align: center; padding: 28px 20px 20px; }
 .hero h1 { font-size: 32px; font-weight: 700; letter-spacing: -0.04em; line-height: 1.1; }
 .hero .subtitle { font-size: 17px; color: var(--text-secondary); margin-top: 6px; font-weight: 400; }
+.countdown { text-align: center; padding: 12px 0 4px; }
+.countdown .cd-pill { display: inline-block; padding: 6px 18px; border-radius: 980px; font-size: 14px; font-weight: 600; color: #fff; background: linear-gradient(135deg, #ff6b6b, #ee5a24); box-shadow: 0 2px 8px rgba(238,90,36,.25); }
+.countdown .cd-pill.during { background: linear-gradient(135deg, #00b894, #00cec9); box-shadow: 0 2px 8px rgba(0,184,148,.25); }
+.countdown .cd-pill.done { background: var(--text-tertiary); box-shadow: none; }
+.countdown .cd-num { font-size: 22px; font-weight: 800; margin: 0 2px; }
 
 .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
 .info-card { background: var(--bg-elevated); border-radius: var(--radius-lg); padding: 16px; box-shadow: var(--shadow-sm); }
@@ -278,6 +283,17 @@ const DAYS = [
 function overviewContent() {
   return `
 <div class="hero"><h1>BUSAN</h1><p class="subtitle">9/3-9/6</p></div>
+<div class="countdown" id="countdown"></div>
+<script>
+(function(){
+  var dep=new Date('2026-09-03'),ret=new Date('2026-09-07'),now=new Date();
+  var el=document.getElementById('countdown');
+  var d=Math.ceil((dep-now)/(864e5));
+  if(d>0) el.innerHTML='<span class="cd-pill">距离出行还有 <span class="cd-num">'+d+'</span> 天</span>';
+  else if(d>-4) el.innerHTML='<span class="cd-pill during">旅行中 Day <span class="cd-num">'+(1-d)+'</span></span>';
+  else el.innerHTML='<span class="cd-pill done">旅行已结束</span>';
+})();
+</script>
 <div class="info-grid">
   <div class="info-card"><div class="label">酒店</div><div class="value">朝昕经典→乐天<br><span style="font-size:12px;color:var(--text-secondary)">海云台2晚·西面1晚</span></div></div>
   <div class="info-card"><div class="label">航班</div><div class="value">去 MU5043 08:10→11:35<br>回 FM830 17:50→18:40</div></div>
