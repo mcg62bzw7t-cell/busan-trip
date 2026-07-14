@@ -284,16 +284,6 @@ function overviewContent() {
   return `
 <div class="hero"><h1>BUSAN</h1><p class="subtitle">9/3-9/6</p></div>
 <div class="countdown" id="countdown"></div>
-<script>
-(function(){
-  var dep=new Date('2026-09-03'),ret=new Date('2026-09-07'),now=new Date();
-  var el=document.getElementById('countdown');
-  var d=Math.ceil((dep-now)/(864e5));
-  if(d>0) el.innerHTML='<span class="cd-pill">距离出行还有 <span class="cd-num">'+d+'</span> 天</span>';
-  else if(d>-4) el.innerHTML='<span class="cd-pill during">旅行中 Day <span class="cd-num">'+(1-d)+'</span></span>';
-  else el.innerHTML='<span class="cd-pill done">旅行已结束</span>';
-})();
-</script>
 <div class="info-grid">
   <div class="info-card"><div class="label">酒店</div><div class="value">朝昕经典→乐天<br><span style="font-size:12px;color:var(--text-secondary)">海云台2晚·西面1晚</span></div></div>
   <div class="info-card"><div class="label">航班</div><div class="value">去 MU5043 08:10→11:35<br>回 FM830 17:50→18:40</div></div>
@@ -506,10 +496,21 @@ DAYS.forEach(d => {
   tabsEl.appendChild(btn);
 });
 
+function updateCountdown() {
+  var el=document.getElementById('countdown');
+  if(!el) return;
+  var dep=new Date('2026-09-03'),now=new Date();
+  var d=Math.ceil((dep-now)/864e5);
+  if(d>0) el.innerHTML='<span class="cd-pill">距离出行还有 <span class="cd-num">'+d+'</span> 天</span>';
+  else if(d>-4) el.innerHTML='<span class="cd-pill during">旅行中 Day <span class="cd-num">'+(1-d)+'</span></span>';
+  else el.innerHTML='<span class="cd-pill done">旅行已结束</span>';
+}
+
 function go(idx) {
   cur = idx;
   tabsEl.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', +t.dataset.day===idx));
   contentEl.innerHTML = idx===0 ? overviewContent() : renderDay(idx);
+  if(idx===0) updateCountdown();
   showDay(idx);
   contentEl.scrollTo({top:0});
   const tab = tabsEl.querySelector(`[data-day="${idx}"]`);
