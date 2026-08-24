@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -150,8 +150,6 @@ a:hover { text-decoration: underline; }
 }
 .btn:active { filter: brightness(.9); }
 .btn.nav    { background: var(--accent); color: #fff; }
-.btn.xhs    { background: #ff2442; color: #fff; }
-.btn.dp     { background: #ffa700; color: #fff; }
 .btn.rsv    { background: var(--tint-green); color: #fff; }
 
 .as-overlay {
@@ -222,62 +220,62 @@ const HOTEL2 = { name: '釜山乐天酒店 Lotte Hotel', lat: 35.1542, lng: 129.
 const DAYS = [
   { id: 0, label: '总览', color: '#0071e3', locations: [] },
 {
-    id: 1, label: 'D1', date: '9/3 周四', title: '抵达·牛肠·奥莱·夜市', color: '#ff9500',
+    id: 1, label: 'D1', date: '9/3 周四', title: '抵达·牛肠·奥莱·简餐', color: '#ff9500',
     locations: [
       { name: '釜山金海机场', lat: 35.1735, lng: 128.9385, type: 'transport', time: '11:35', desc: 'MU5043 浦东09:00→釜山11:35', detail: '机场打车→朝昕经典酒店\n约45min，车费₩25,000-35,000\n4人打车比大巴更划算', pay: { cash: 1, card: 1 } },
       { name: '朝昕经典酒店 放行李', lat: 35.1588, lng: 129.1604, type: 'hotel', time: '12:30', desc: '先放行李，晚上回来check-in', detail: '해운대해변로 292 海云台区\nTripadvisor釜山酒店排名第1\n前台寄存行李\n晚上回来正式check-in' },
-      { name: '해성막창집 엘시티점（海城烤牛肠）🐄', lat: 35.1681, lng: 129.1652, type: 'food', time: '13:00', desc: '海云台LCT旁！烤牛大肠+牛皱胃，外酥内嫩爆汁', budget: '₩20,000-30,000/人 ≈ ¥110-165', detail: '招牌：소막창(牛皱胃)+대창구이(烤牛大肠) ₩12,000/份\n外酥内嫩，蘸盐+香油绝了\n⚠️ 烤肠类3份起订，4人正好！\n平日16:30-00:00\n⚠️ 周日定休，D1周四没问题\n海云台LCT塔旁步行可达', pay: { cash: 1, card: 1 }, xhsKeyword: '해성막창집 釜山牛肠海云台' },
+      { name: '해성막창집 엘시티점（海城烤牛肠）🐄', lat: 35.1681, lng: 129.1652, type: 'food', time: '13:00', desc: '海云台LCT旁！烤牛大肠+牛皱胃，外酥内嫩爆汁', budget: '₩20,000-30,000/人 ≈ ¥110-165', detail: '招牌：소막창(牛皱胃)+대창구이(烤牛大肠) ₩12,000/份\n外酥内嫩，蘸盐+香油绝了\n⚠️ 烤肠类3份起订，4人正好！\n平日16:30-00:00\n⚠️ 周日定休，D1周四没问题\n海云台LCT塔旁步行可达', pay: { cash: 1, card: 1 } },
       { name: '打车去东釜山奥莱', lat: 35.1588, lng: 129.1604, type: 'transport', time: '14:15', desc: '海云台→东釜山奥莱，约45min', detail: '海云台→东釜山乐天奥莱\n约30km，车费₩30,000-35,000\n14:15出发约15:00到达' },
-      { name: '釜山乐天奥特莱斯', lat: 35.19205, lng: 129.21277, type: 'spot', time: '15:00', desc: '롯데프리미엄아울렛 동부산점，品牌折扣+退税', budget: '视购物', detail: '기장군 기장읍 기장해안로 147\n东釜山Osiria站旁（东海线）\n品牌折扣购物中心\n可退税\nAdidas/Nike/韩国品牌等\n逛2.5小时', pay: { card: 1, alipay: 0.5 }, xhsKeyword: '롯데프리미엄아울렛 동부산 釜山乐天奥莱' },
-      { name: '打车回海云台', lat: 35.19205, lng: 129.21277, type: 'transport', time: '17:30', desc: '奥莱→海云台酒店，约45min', detail: '东釜山奥莱→朝昕经典酒店\n打车约45min，车费₩30,000-35,000\n17:30出发约18:15到达' },
-      { name: '朝昕经典酒店 check-in 🏨', lat: 35.1588, lng: 129.1604, type: 'hotel', time: '18:15', desc: '正式入住，放行李换衣服', detail: '해운대해변로 292 海云台区\nTripadvisor釜山酒店排名第1\n正式check-in\n放行李+换衣服+休息' },
-      { name: '海云台夜市 🌙', lat: 35.1585, lng: 129.1605, type: 'drink', time: '19:00', desc: '해운대포장마차거리，海边小吃摊一条街', budget: '₩5,000/人 ≈ ¥28', detail: '해운대 포장마차 거리\n炒年糕/鱼饼/米酒/活章鱼\n住在海云台，走路就到！', pay: { cash: 1 }, xhsKeyword: '해운대 포장마차 야시장 부산' }
+      { name: '釜山乐天奥特莱斯', lat: 35.19205, lng: 129.21277, type: 'spot', time: '15:00', desc: '롯데프리미엄아울렛 동부산점，品牌折扣+退税', budget: '视购物', detail: '기장군 기장읍 기장해안로 147\n东釜山Osiria站旁（东海线）\n品牌折扣购物中心\n可退税\nAdidas/Nike/韩国品牌等\n逛2.5小时', pay: { card: 1, alipay: 0.5 } },
+      { name: '奥莱简餐', lat: 35.19205, lng: 129.21277, type: 'food', time: '17:30', desc: '奥莱美食区简餐，逛完直接吃', budget: '₩10,000-15,000/人 ≈ ¥55-82', detail: '东釜山奥莱内美食区\n多家简餐可选\n逛完直接吃不用转场\n吃完打车回酒店', pay: { cash: 1, card: 1 } },
+      { name: '打车回海云台', lat: 35.19205, lng: 129.21277, type: 'transport', time: '19:30', desc: '奥莱→海云台酒店，约45min', detail: '东釜山奥莱→朝昕经典酒店\n打车约45min，车费₩30,000-35,000\n19:30出发约20:15到达' },
+      { name: '朝昕经典酒店 check-in 🏨', lat: 35.1588, lng: 129.1604, type: 'hotel', time: '20:15', desc: '正式入住，放行李休息', detail: '해운대해변로 292 海云台区\nTripadvisor釜山酒店排名第1\n正式check-in\n放行李+休息' }
     ]
   },
 {
     id: 2, label: 'D2', date: '9/4 周五', title: '美发化妆·海岸线·广安里·Spa', color: '#007aff',
     locations: [
-      { name: 'Working Holiday（워킹홀리데이）早餐', lat: 35.15989, lng: 129.16156, type: 'food', time: '08:30', desc: '海云台人气早午餐，班尼迪克蛋/法式吐司', budget: '₩12,000-18,000/人 ≈ ¥66-99', detail: '해운대해변로 277 5층 (Hollys咖啡5楼)\n08:00-21:30，브런치 08:00-19:00\n澳洲式早午餐\n班尼迪克蛋/法式吐司/手冲\n步行可达，酒店附近', pay: { card: 1 }, xhsKeyword: '워킹홀리데이 WorkingHoliday 釜山海云台브런치' },
-      { name: 'Foret Garden（포레가든）美发 🔥', lat: 35.1595, lng: 129.1610, type: 'spot', time: '09:30', desc: '海云台温泉中心6层，500坪综合美容沙龙，评分4.96/5502条（坐标为估算）', budget: '₩20,000-150,000', detail: '釜山·蔚山·庆南最大综合美容沙龙\n海云台温泉中心6F\nNaver/官网/电话预约，提前1-2周\n剪发₩2万起，烫发₩8万起\n4人可同时约多位设计师\n约2-3小时\n⚠️ 坐标为估算，建议在Naver搜索确认', pay: { card: 1 }, xhsKeyword: '이경민 포레가든 미용실 釜山海云台美发' },
-      { name: 'Foret Garden 化妆 💄', lat: 35.1595, lng: 129.1610, type: 'spot', time: '12:00', desc: '美发后直接化妆，同一家店一站式搞定', budget: '₩30,000-80,000', detail: '与美发同一家店\n海云台温泉中心6F\n美发后直接化妆，无需转场\n妆容设计₩3-8万韩元\n约1小时\n4人同行更划算\nNaver/官网/电话预约', pay: { card: 1 }, xhsKeyword: '이경민 포레가든 미용실 釜山海云台美发化妆' },
+      { name: 'Working Holiday（워킹홀리데이）早餐', lat: 35.15989, lng: 129.16156, type: 'food', time: '08:30', desc: '海云台人气早午餐，班尼迪克蛋/法式吐司', budget: '₩12,000-18,000/人 ≈ ¥66-99', detail: '해운대해변로 277 5층 (Hollys咖啡5楼)\n08:00-21:30，브런치 08:00-19:00\n澳洲式早午餐\n班尼迪克蛋/法式吐司/手冲\n步行可达，酒店附近', pay: { card: 1 } },
+      { name: 'Foret Garden（포레가든）美发 🔥', lat: 35.1595, lng: 129.1610, type: 'spot', time: '09:30', desc: '海云台温泉中心6层，500坪综合美容沙龙，评分4.96/5502条（坐标为估算）', budget: '₩20,000-150,000', detail: '釜山·蔚山·庆南最大综合美容沙龙\n海云台温泉中心6F\nNaver/官网/电话预约，提前1-2周\n剪发₩2万起，烫发₩8万起\n4人可同时约多位设计师\n约2-3小时\n⚠️ 坐标为估算，建议在Naver搜索确认', pay: { card: 1 } },
+      { name: 'Foret Garden 化妆 💄', lat: 35.1595, lng: 129.1610, type: 'spot', time: '12:00', desc: '美发后直接化妆，同一家店一站式搞定', budget: '₩30,000-80,000', detail: '与美发同一家店\n海云台温泉中心6F\n美发后直接化妆，无需转场\n妆容设计₩3-8万韩元\n约1小时\n4人同行更划算\nNaver/官网/电话预约', pay: { card: 1 } },
       { name: '步行→Mipo尾浦站', lat: 35.1622, lng: 129.1750, type: 'transport', time: '13:15', desc: '从海云台步行去尾浦站，约15min', detail: '朝昕经典酒店→Mipo尾浦站\n步行约15min\n13:30前到站赶胶囊列车' },
-      { name: '海云台蓝线胶囊列车 🚡', lat: 35.1622, lng: 129.1750, type: 'spot', time: '13:30', desc: 'Mipo→Cheongsapo海边胶囊小火车', budget: '₩7,000-15,000/人', detail: '⚠️必须提前1-2周在官网预约\nbluelinepark.com\n选Mipo→Cheongsapo方向\n约30分钟车程', pay: { card: 1 }, xhsKeyword: '釜山胶囊小火车预约' },
-      { name: '海岸列车（青沙浦→松亭）🎟️', lat: 35.16082, lng: 129.19338, type: 'spot', time: '14:15', desc: '开放式海岸列车，青沙浦→松亭，海景无敌', budget: '₩7,000-10,000/人', detail: '胶囊到青沙浦后换乘海岸列车\n开放式车厢拍照更自由\nCheongsapo→松亭约20分钟\nBusan Pass B组可覆盖', pay: { card: 1 }, xhsKeyword: '釜山海岸列车BlueLine' },
+      { name: '海云台蓝线胶囊列车 🚡', lat: 35.1622, lng: 129.1750, type: 'spot', time: '13:30', desc: 'Mipo→Cheongsapo海边胶囊小火车', budget: '₩7,000-15,000/人', detail: '⚠️必须提前1-2周在官网预约\nbluelinepark.com\n选Mipo→Cheongsapo方向\n约30分钟车程', pay: { card: 1 } },
+      { name: '海岸列车（青沙浦→松亭）🎟️', lat: 35.16082, lng: 129.19338, type: 'spot', time: '14:15', desc: '开放式海岸列车，青沙浦→松亭，海景无敌', budget: '₩7,000-10,000/人', detail: '胶囊到青沙浦后换乘海岸列车\n开放式车厢拍照更自由\nCheongsapo→松亭约20分钟\nBusan Pass B组可覆盖', pay: { card: 1 } },
       { name: '打车去广安里', lat: 35.16082, lng: 129.19338, type: 'transport', time: '14:45', desc: '松亭打车去广安里，约25min', detail: '松亭→广安里海水浴场\n约15km，车费₩15,000-20,000\n14:45出发约15:15到达' },
-      { name: '广安里海水浴场 🏖️', lat: 35.1533, lng: 129.1185, type: 'spot', time: '15:15', desc: '광안리해수욕장，广安大桥夜景地标，沙滩拍照+咖啡街', detail: '广安里海水浴场\n广安大桥地标拍照\n沙滩散步+咖啡街\n比海云台更年轻氛围\n逛1小时', pay: { cash: 1, card: 1 }, xhsKeyword: '釜山广安里海水浴场 광안리' },
+      { name: '广安里海水浴场 🏖️', lat: 35.1533, lng: 129.1185, type: 'spot', time: '15:15', desc: '광안리해수욕장，广安大桥夜景地标，沙滩拍照+咖啡街', detail: '广安里海水浴场\n广安大桥地标拍照\n沙滩散步+咖啡街\n比海云台更年轻氛围\n逛1小时', pay: { cash: 1, card: 1 } },
       { name: '地铁去Centum City', lat: 35.1533, lng: 129.1185, type: 'transport', time: '16:30', desc: '广安里站→Centum City站，地铁2号线约15min', detail: '广安里站→Centum City站\n地铁2号线直达约15min\n车费₩1,400/人\n16:30出发约17:00到达' },
-      { name: '新世界百货 Centum City', lat: 35.1691, lng: 129.1298, type: 'spot', time: '17:00', desc: '世界最大百货，奢侈品+韩妆大牌', detail: 'Centum City站直达\n世界最大百货商场\n奢侈品/韩妆/服饰一站购\n可当日退税\n逛1.5hr', pay: { card: 1, alipay: 0.5 }, xhsKeyword: '新世界센텀시티 부산 쇼핑' },
-      { name: 'Centum City 晚餐', lat: 35.1691, lng: 129.1298, type: 'food', time: '18:30', desc: '新世界百货B1美食层多选', budget: '₩15,000-20,000/人 ≈ ¥82-110', detail: '新世界百货B1美食广场\nSpiceman韩式料理/日式定食\n多家可选，丰俭由人\n饭后直接去Spa Land泡汤', pay: { card: 1, alipay: 0.5 }, xhsKeyword: '신세계 센텀시티 부산 B1 맛집' },
-      { name: 'Spa Land 温泉 🎟️', lat: 35.1691, lng: 129.1298, type: 'spot', time: '19:30', desc: 'Centum City内，汗蒸幕+汤泉，舒缓疲劳', budget: '₩15,000/人（Pass覆盖）', detail: '新世界Centum City 1F\n多种主题汗蒸幕+温泉池\n22:00关门，19:30到够泡\nBusan Pass A组\n泡完打车回酒店', pay: { card: 1 }, xhsKeyword: '釜山SpaLand_centum' },
+      { name: '新世界百货 Centum City', lat: 35.1691, lng: 129.1298, type: 'spot', time: '17:00', desc: '世界最大百货，奢侈品+韩妆大牌', detail: 'Centum City站直达\n世界最大百货商场\n奢侈品/韩妆/服饰一站购\n可当日退税\n逛1.5hr', pay: { card: 1, alipay: 0.5 } },
+      { name: 'Centum City 晚餐', lat: 35.1691, lng: 129.1298, type: 'food', time: '18:30', desc: '新世界百货B1美食层多选', budget: '₩15,000-20,000/人 ≈ ¥82-110', detail: '新世界百货B1美食广场\nSpiceman韩式料理/日式定食\n多家可选，丰俭由人\n饭后直接去Spa Land泡汤', pay: { card: 1, alipay: 0.5 } },
+      { name: 'Spa Land 温泉 🎟️', lat: 35.1691, lng: 129.1298, type: 'spot', time: '19:30', desc: 'Centum City内，汗蒸幕+汤泉，舒缓疲劳', budget: '₩15,000/人（Pass覆盖）', detail: '新世界Centum City 1F\n多种主题汗蒸幕+温泉池\n22:00关门，19:30到够泡\nBusan Pass A组\n泡完打车回酒店', pay: { card: 1 } },
       { name: '打车回酒店', lat: 35.1691, lng: 129.1298, type: 'transport', time: '21:00', desc: 'Centum City→海云台酒店，约15min', detail: 'Centum City→朝昕经典酒店\n打车约15min，车费₩8,000-10,000' }
     ]
   },
 {
     id: 3, label: 'D3', date: '9/5 周六', title: '化妆·换酒店·土豆汤·甘川·缆车·南浦', color: '#af52de',
     locations: [
-      { name: '에그드랍（Egg Drop）早餐', lat: 35.16327, lng: 129.15869, type: 'food', time: '08:30', desc: '海云台人气三明治早餐，韩式Egg Drop', budget: '₩12,000-18,000/人 ≈ ¥66-99', detail: '에그드랍 해운대점\n해운대로 620 펠릭스호텔 1층\n韩式三明治连锁品牌\n手工面包/班尼迪克蛋/沙拉\n步行可达，酒店附近', pay: { card: 1 }, xhsKeyword: '에그드랍 EggDrop 釜山海云台브런치' },
-      { name: 'poff（포프）化妆室 💄', lat: 35.1615, lng: 129.1620, type: 'spot', time: '09:30', desc: '海云台商圈专业化妆室，BeautsGO/Naver预约', budget: '₩30,000-80,000', detail: '해운대 메이크업 전문\nBeautsGO / Naver预约\n妆容设计₩3-8万韩元\n约1小时\n4人同行更划算', pay: { card: 1 }, xhsKeyword: 'poff 포프 메이크업 釜山海云台化妆室' },
+      { name: '에그드랍（Egg Drop）早餐', lat: 35.16327, lng: 129.15869, type: 'food', time: '08:30', desc: '海云台人气三明治早餐，韩式Egg Drop', budget: '₩12,000-18,000/人 ≈ ¥66-99', detail: '에그드랍 해운대점\n해운대로 620 펠릭스호텔 1층\n韩式三明治连锁品牌\n手工面包/班尼迪克蛋/沙拉\n步行可达，酒店附近', pay: { card: 1 } },
+      { name: 'poff（포프）化妆室 💄', lat: 35.1615, lng: 129.1620, type: 'spot', time: '09:30', desc: '海云台商圈专业化妆室，BeautsGO/Naver预约', budget: '₩30,000-80,000', detail: '해운대 메이크업 전문\nBeautsGO / Naver预约\n妆容设计₩3-8万韩元\n约1小时\n4人同行更划算', pay: { card: 1 } },
       { name: '回酒店退房取行李 🧳', lat: 35.1588, lng: 129.1604, type: 'hotel', time: '10:45', desc: '回朝昕经典酒店退房拿行李', detail: '回朝昕经典酒店\n退房+取行李\n约15min' },
       { name: '打车去西面乐天酒店', lat: 35.1588, lng: 129.1604, type: 'transport', time: '11:30', desc: '海云台→西面，约50min', detail: '海云台→西面乐天酒店\n打车约50min，车费₩30,000-35,000\n11:30出发约12:30到达' },
       { name: '釜山乐天酒店 放行李 🏨', lat: 35.1542, lng: 129.0577, type: 'hotel', time: '12:30', desc: '寄存行李，15:00后正式check-in', detail: '772 Gaya-daero 釜山镇区\n与乐天百货直接连通\n距西面站步行5分钟\n5星豪华酒店\n先寄存行李\n晚上回来正式check-in' },
-      { name: '누리마을감자탕 부민동아대점（世界村庄土豆汤）', lat: 35.1036, lng: 129.0253, type: 'food', time: '13:00', desc: '土城站旁！招牌猪骨土豆汤，自助小菜台，吃完去甘川超顺路', budget: '₩12,000-18,000/人 ≈ ¥66-99', detail: '招牌：감자탕(猪骨土豆汤)₩12,000-18,000\n自助小菜台(셀프바)泡菜自取\n辣骨解醒汤₩10,000 / 酱油蒸骨₩15,000-20,000\n汤底可加炒饭(볶음밥)\n土城站2号出口步行5分钟\n东亚大学富民校区正门对面\n4.2分 566条评价\n10:00-22:00', pay: { cash: 1, card: 1 }, xhsKeyword: '누리마을감자탕 釜山土豆汤' },
-      { name: '甘川文化村 🏘️ 🎟️', lat: 35.0986, lng: 129.0136, type: 'spot', time: '14:00', desc: '彩色童话村，小王子雕像，逛1.5hrs', detail: '釜山必打卡！彩色房子层层叠叠\n小王子拍照需排队\n入口买集章地图₩2,000\nBusan Pass B组\n土豆汤餐厅步行/打车5-10分钟可达\n逛1.5小时', pay: { cash: 1 }, xhsKeyword: '釜山甘川文化村' },
+      { name: '누리마을감자탕 부민동아대점（世界村庄土豆汤）', lat: 35.1036, lng: 129.0253, type: 'food', time: '13:00', desc: '土城站旁！招牌猪骨土豆汤，自助小菜台，吃完去甘川超顺路', budget: '₩12,000-18,000/人 ≈ ¥66-99', detail: '招牌：감자탕(猪骨土豆汤)₩12,000-18,000\n自助小菜台(셀프바)泡菜自取\n辣骨解醒汤₩10,000 / 酱油蒸骨₩15,000-20,000\n汤底可加炒饭(볶음밥)\n土城站2号出口步行5分钟\n东亚大学富民校区正门对面\n4.2分 566条评价\n10:00-22:00', pay: { cash: 1, card: 1 } },
+      { name: '甘川文化村 🏘️ 🎟️', lat: 35.0986, lng: 129.0136, type: 'spot', time: '14:00', desc: '彩色童话村，小王子雕像，逛1.5hrs', detail: '釜山必打卡！彩色房子层层叠叠\n小王子拍照需排队\n入口买集章地图₩2,000\nBusan Pass B组\n土豆汤餐厅步行/打车5-10分钟可达\n逛1.5小时', pay: { cash: 1 } },
       { name: '打车去松岛海上缆车', lat: 35.0986, lng: 129.0136, type: 'transport', time: '15:30', desc: '甘川打车去松岛，约20min', detail: '甘川→松岛海上缆车\n约10km，车费₩10,000-15,000\n15:30出发约16:00到达' },
-      { name: '松岛海上缆车 🚠 🎟️', lat: 35.0986, lng: 129.0253, type: 'spot', time: '16:00', desc: '海上透明缆车！往返约1h', budget: '₩17,000/人 ≈ ¥93', detail: '松岛海上缆车（송도해상케이블카）\n海面透明玻璃车厢\n往返约1小时含等待\nBusan Pass B组可覆盖\n看松岛海岸线+白鲸广场', pay: { card: 1 }, xhsKeyword: '釜山松岛海上缆车' },
+      { name: '松岛海上缆车 🚠 🎟️', lat: 35.0986, lng: 129.0253, type: 'spot', time: '16:00', desc: '海上透明缆车！往返约1h', budget: '₩17,000/人 ≈ ¥93', detail: '松岛海上缆车（송도해상케이블카）\n海面透明玻璃车厢\n往返约1小时含等待\nBusan Pass B组可覆盖\n看松岛海岸线+白鲸广场', pay: { card: 1 } },
       { name: '打车去南浦', lat: 35.0986, lng: 129.0253, type: 'transport', time: '17:15', desc: '松岛打车去南浦，约15min', detail: '松岛→南浦洞\n约8km，车费₩8,000-12,000\n17:15出发约17:30到达' },
-      { name: '南浦洞步行街', lat: 35.1008, lng: 129.0280, type: 'spot', time: '17:30', desc: '釜山最热闹商圈，逛街买伴手礼', detail: '南浦洞商业街\n釜山最热闹商圈\n药妆/服饰/伴手礼\n晚上亮灯更有氛围', pay: { cash: 1, card: 1 }, xhsKeyword: '釜山南浦洞购物' },
-      { name: 'BIFF广场小吃街', lat: 35.0991, lng: 129.0262, type: 'food', time: '18:30', desc: '坚果糖饼必吃！电影街手印地砖', budget: '₩1,500起', detail: 'BIFF广场 坚果糖饼(호떡)₩1,500必吃\n电影街手印地砖可以找明星\n小吃摊边走边吃\n人多热闹', pay: { cash: 1 }, xhsKeyword: '釜山BIFF广场' },
-      { name: '札嘎其市场', lat: 35.0985, lng: 129.0245, type: 'food', time: '19:30', desc: '海鲜市场！可现场代加工鱼贝类', detail: '札嘎其市场（자갈치시장）\n釜山最大海鲜市场\n可以现场挑海鲜代加工\n晚餐/宵夜海鲜大餐', pay: { cash: 1, card: 1 }, xhsKeyword: '釜山札嘎其市场' },
+      { name: '南浦洞步行街', lat: 35.1008, lng: 129.0280, type: 'spot', time: '17:30', desc: '釜山最热闹商圈，逛街买伴手礼', detail: '南浦洞商业街\n釜山最热闹商圈\n药妆/服饰/伴手礼\n晚上亮灯更有氛围', pay: { cash: 1, card: 1 } },
+      { name: 'BIFF广场小吃街', lat: 35.0991, lng: 129.0262, type: 'food', time: '18:30', desc: '坚果糖饼必吃！电影街手印地砖', budget: '₩1,500起', detail: 'BIFF广场 坚果糖饼(호떡)₩1,500必吃\n电影街手印地砖可以找明星\n小吃摊边走边吃\n人多热闹', pay: { cash: 1 } },
+      { name: '札嘎其市场', lat: 35.0985, lng: 129.0245, type: 'food', time: '19:30', desc: '海鲜市场！可现场代加工鱼贝类', detail: '札嘎其市场（자갈치시장）\n釜山最大海鲜市场\n可以现场挑海鲜代加工\n晚餐/宵夜海鲜大餐', pay: { cash: 1, card: 1 } },
       { name: '地铁回西面', lat: 35.0985, lng: 129.0245, type: 'transport', time: '20:45', desc: '南浦→西面，约15min', detail: '南浦→西面地铁\n约15min\n回乐天酒店' },
       { name: '釜山乐天酒店 check-in 🏨', lat: 35.1542, lng: 129.0577, type: 'hotel', time: '21:00', desc: '正式入住', detail: '772 Gaya-daero 釜山镇区\n与乐天百货直接连通\n距西面站步行5分钟\n5星豪华酒店\n正式check-in' },
-      { name: '乐天百货（西面店）', lat: 35.1542, lng: 129.0577, type: 'spot', time: '21:15', desc: '与酒店直连，逛名牌+伴手礼，退税', detail: '乐天百货西面店\n与乐天酒店直连\n名牌/服饰/伴手礼\n可退税\n22:00关门，快速逛45min', pay: { card: 1, alipay: 0.5 }, xhsKeyword: '乐天百货 釜山西面' }
+      { name: '乐天百货（西面店）', lat: 35.1542, lng: 129.0577, type: 'spot', time: '21:15', desc: '与酒店直连，逛名牌+伴手礼，退税', detail: '乐天百货西面店\n与乐天酒店直连\n名牌/服饰/伴手礼\n可退税\n22:00关门，快速逛45min', pay: { card: 1, alipay: 0.5 } }
     ]
   },
 {
     id: 4, label: 'D4', date: '9/6 周日', title: '西面扫货·韩牛·返程', color: '#34c759',
     locations: [
-      { name: 'OLIVE YOUNG 西面店', lat: 35.1565, lng: 129.0605, type: 'spot', time: '09:30', desc: '美妆补货最后一波，现场退税', detail: '现场退税，满3万韩元可退\n推荐：Mediheal面膜、Torriden精华\n买够再走！', pay: { card: 1, alipay: 0.5 }, xhsKeyword: 'OLIVE YOUNG 釜山西面' },
-      { name: '사랑과평화（爱与和平韩牛）🥂', lat: 35.1580, lng: 129.0630, type: 'food', time: '12:00', desc: '1++顶级韩牛！独立隔间，全程帮烤，闺蜜庆祝首选', budget: '₩40,000-60,000/人 ≈ ¥220-330', detail: '1++等级韩牛专门店\n独立隔间，全程店员帮烤\n配上等烧酒/啤酒\n⚠️建议提前预约（Catchtable/Naver）\n午餐时段人少更好约\n旅途收官庆祝！', pay: { cash: 1, card: 1 }, xhsKeyword: '사랑과평화釜山韩牛' },
+      { name: 'OLIVE YOUNG 西面店', lat: 35.1565, lng: 129.0605, type: 'spot', time: '09:30', desc: '美妆补货最后一波，现场退税', detail: '现场退税，满3万韩元可退\n推荐：Mediheal面膜、Torriden精华\n买够再走！', pay: { card: 1, alipay: 0.5 } },
+      { name: '사랑과평화（爱与和平韩牛）🥂', lat: 35.1580, lng: 129.0630, type: 'food', time: '12:00', desc: '1++顶级韩牛！独立隔间，全程帮烤，闺蜜庆祝首选', budget: '₩40,000-60,000/人 ≈ ¥220-330', detail: '1++等级韩牛专门店\n独立隔间，全程店员帮烤\n配上等烧酒/啤酒\n⚠️建议提前预约（Catchtable/Naver）\n午餐时段人少更好约\n旅途收官庆祝！', pay: { cash: 1, card: 1 } },
       { name: '回酒店取行李 🧳', lat: 35.1542, lng: 129.0577, type: 'hotel', time: '13:30', desc: '拿行李准备出发机场', detail: '回乐天酒店取行李\n13:30取好\n准备出发' },
       { name: '前往机场 🚃', lat: 35.1542, lng: 129.0577, type: 'transport', time: '14:00', desc: 'Limousine Bus西面→机场约50min', detail: 'Limousine Bus约50min\n或打车约40min\n确保15:00前到达机场', pay: { cash: 1, card: 1 } },
       { name: '釜山金海机场', lat: 35.1735, lng: 128.9385, type: 'transport', time: '15:00', desc: 'FM830 釜山17:50→浦东18:40', detail: '提前2.5hr到达\n退税在海关盖章后办理\n17:50起飞', pay: { cash: 1, card: 1 } }
@@ -399,7 +397,7 @@ function showDay(idx) {
     if(!l.lat) return;
     const m = L.marker([l.lat,l.lng], { icon: icon(day.color, emojis[l.type]||'📌') }).addTo(map);
     const gmapQ = l.gmap||encodeURIComponent(l.name+' Busan Korea');
-    m.bindPopup(`<b>${l.name}</b>${l.time!=='—'?'<br><span style="color:#86868b">'+l.time+'</span>':''}<br>${l.desc}${l.budget?'<br><span style="color:#ff9500">'+l.budget+'</span>':''}<br><a href="#" onclick="event.preventDefault();openAS('${l.name.replace(/'/g,"\\'")}',${l.lat},${l.lng},'${gmapQ}')">📍 导航</a>${l.xhs?' · <a href="'+l.xhs+'" target="_blank">📕 小红书</a>':''}`);
+    m.bindPopup(`<b>${l.name}</b>${l.time!=='—'?'<br><span style="color:#86868b">'+l.time+'</span>':''}<br>${l.desc}${l.budget?'<br><span style="color:#ff9500">'+l.budget+'</span>':''}<br><a href="#" onclick="event.preventDefault();openAS('${l.name.replace(/'/g,"\\'")}',${l.lat},${l.lng},'${gmapQ}')">📍 导航</a>`);
     markers.push(m);
     if(l.time!=='—') coords.push([l.lat,l.lng]);
   });
@@ -417,60 +415,17 @@ function payChips(pay) {
   return h+'</div>';
 }
 
-const IN_APP_WEBVIEW = (() => {
-  const ua = (navigator.userAgent || '').toLowerCase();
-  return /micromessenger|xhs|xhsdiscover|discover\/|tiktok|aweme|weibo|qq\/|qqbrowser|alipayclient|dingtalk|lark|feishu|ucbrowser|baiduboxapp|toutiao|newsarticle/.test(ua);
-})();
 
-function xhsKeyword(loc) {
-  if(loc.xhsKeyword) return loc.xhsKeyword.trim();
-  return (loc.name||'').replace(/⭐.*$/g,'').replace(/（.*?）/g,'').replace(/\(.*?\)/g,'').replace(/\s+/g,' ').trim();
-}
-function xhsAppUrl(loc) { return `xhsdiscover://search/result?keyword=${encodeURIComponent(xhsKeyword(loc))}&target_search=notes&source=deeplink`; }
-function xhsWebUrl(loc) { return `https://www.xiaohongshu.com/search_result?keyword=${encodeURIComponent(xhsKeyword(loc))}&source=web_explore_feed`; }
-
-function dpKeyword(loc) {
-  if(loc.dianpingKeyword) return loc.dianpingKeyword.trim();
-  return (loc.name||'').replace(/⭐.*$/g,'').replace(/（.*?）/g,'').replace(/\(.*?\)/g,'').replace(/\s+/g,' ').trim();
-}
-function dpAppUrl(loc) { return `dianping://searchshoplist?keyword=${encodeURIComponent(dpKeyword(loc))}`; }
-function dpWebUrl(loc) { return `https://m.dianping.com/searchshop?keyword=${encodeURIComponent(dpKeyword(loc))}`; }
 
 window._extLocs = {};
 DAYS.forEach(d => d.locations.forEach(l => { window._extLocs[`${d.id}::${l.name}`] = l; }));
-window._xhsLocs = window._extLocs;
-
-function openExt(key, kind) {
-  const loc = window._extLocs[key]; if(!loc) return false;
-  if (IN_APP_WEBVIEW) {
-    window.location.href = kind==='dp' ? dpWebUrl(loc) : xhsWebUrl(loc);
-  } else {
-    window.location.href = kind==='dp' ? dpAppUrl(loc) : xhsAppUrl(loc);
-  }
-  return false;
-}
-function openXhs(key) { return openExt(key, 'xhs'); }
-function openDp(key)  { return openExt(key, 'dp'); }
 
 function locCard(loc, dayIdx) {
   const dot = loc.type==='food'?'food':loc.type==='spot'?'spot':loc.type==='drink'?'drink':loc.type==='hotel'?'hotel':'transport';
   const bdg = loc.type==='food'?'<span class="badge food">餐</span>':loc.type==='spot'?'<span class="badge spot">景</span>':loc.type==='drink'?'<span class="badge drink">饮</span>':'';
   const uid = `d${dayIdx}-${loc.name.replace(/\W/g,'')}`;
-  const locKey = `${dayIdx}::${loc.name}`;
   const gmapQ = loc.gmap||encodeURIComponent(loc.name+' Busan Korea');
   let lnk = `<button class="btn nav" onclick="openAS('${loc.name.replace(/'/g,"\\'")}',${loc.lat},${loc.lng},'${gmapQ}')">📍 导航</button>`;
-  if(loc.xhs||loc.xhsKeyword) {
-    const xhsHref = IN_APP_WEBVIEW ? xhsWebUrl(loc) : xhsAppUrl(loc);
-    const xhsLabel = IN_APP_WEBVIEW ? '📕 小红书' : '📕 小红书 App';
-    lnk += `<a href="${xhsHref}" onclick="return openXhs('${locKey.replace(/'/g,"\\'")}')" class="btn xhs">${xhsLabel}</a>`;
-  }
-  const dpEnabled = loc.dianping !== false &&
-    (loc.dianping || loc.dianpingKeyword || loc.type==='food' || loc.type==='drink');
-  if(dpEnabled) {
-    const dpHref = IN_APP_WEBVIEW ? dpWebUrl(loc) : dpAppUrl(loc);
-    const dpLabel = IN_APP_WEBVIEW ? '🍜 大众点评' : '🍜 大众点评 App';
-    lnk += `<a href="${dpHref}" onclick="return openDp('${locKey.replace(/'/g,"\\'")}')" class="btn dp">${dpLabel}</a>`;
-  }
   if(loc.reserve) lnk += `<a href="${loc.reserve}" target="_blank" class="btn rsv">📅 预约</a>`;
   return `<div class="tl-item"><div class="tl-dot ${dot}"></div><div class="card" onclick="if(!event.target.closest('.btn,.links'))toggle('${uid}')"><div class="time">${loc.time!=='—'?loc.time:'备选'}</div><div class="name">${bdg} ${loc.name}</div><div class="desc">${loc.desc}</div>${loc.budget?'<div class="budget">'+loc.budget+'</div>':''}${payChips(loc.pay)}<div class="links">${lnk}</div>${loc.detail?'<div class="details" id="'+uid+'">'+loc.detail.replace(/\n/g,'<br>')+'</div>':''}</div></div>`;
 }
