@@ -235,7 +235,7 @@ const DAYS = [
     ]
   },
 {
-    id: 2, label: 'D2', date: '9/4 周五', title: '美发化妆·海岸线·广安里·观景台·Spa', color: '#007aff',
+    id: 2, label: 'D2', date: '9/4 周五', title: '美发化妆·海岸线·广安里·Spa', color: '#007aff',
     locations: [
       { name: 'Working Holiday（워킹홀리데이）早餐', lat: 35.15989, lng: 129.16156, type: 'food', time: '08:30', desc: '海云台人气早午餐，班尼迪克蛋/法式吐司', budget: '₩12,000-18,000/人 ≈ ¥66-99', detail: '해운대해변로 277 5층 (Hollys咖啡5楼)\n08:00-21:30，브런치 08:00-19:00\n澳洲式早午餐\n班尼迪克蛋/法式吐司/手冲\n步行可达，酒店附近', pay: { card: 1 }, xhsKeyword: '워킹홀리데이 WorkingHoliday 釜山海云台브런치' },
       { name: 'Foret Garden（포레가든）美发 🔥', lat: 35.1595, lng: 129.1610, type: 'spot', time: '09:30', desc: '海云台温泉中心6层，500坪综合美容沙龙，评分4.96/5502条（坐标为估算）', budget: '₩20,000-150,000', detail: '釜山·蔚山·庆南最大综合美容沙龙\n海云台温泉中心6F\nNaver/官网/电话预约，提前1-2周\n剪发₩2万起，烫发₩8万起\n4人可同时约多位设计师\n约2-3小时\n⚠️ 坐标为估算，建议在Naver搜索确认', pay: { card: 1 }, xhsKeyword: '이경민 포레가든 미용실 釜山海云台美发' },
@@ -245,13 +245,11 @@ const DAYS = [
       { name: '海岸列车（青沙浦→松亭）🎟️', lat: 35.16082, lng: 129.19338, type: 'spot', time: '14:15', desc: '开放式海岸列车，青沙浦→松亭，海景无敌', budget: '₩7,000-10,000/人', detail: '胶囊到青沙浦后换乘海岸列车\n开放式车厢拍照更自由\nCheongsapo→松亭约20分钟\nBusan Pass B组可覆盖', pay: { card: 1 }, xhsKeyword: '釜山海岸列车BlueLine' },
       { name: '打车去广安里', lat: 35.16082, lng: 129.19338, type: 'transport', time: '14:45', desc: '松亭打车去广安里，约25min', detail: '松亭→广安里海水浴场\n约15km，车费₩15,000-20,000\n14:45出发约15:15到达' },
       { name: '广安里海水浴场 🏖️', lat: 35.1533, lng: 129.1185, type: 'spot', time: '15:15', desc: '광안리해수욕장，广安大桥夜景地标，沙滩拍照+咖啡街', detail: '广安里海水浴场\n广安大桥地标拍照\n沙滩散步+咖啡街\n比海云台更年轻氛围\n逛1小时', pay: { cash: 1, card: 1 }, xhsKeyword: '釜山广安里海水浴场 광안리' },
-      { name: '打车去X the Sky', lat: 35.1533, lng: 129.1185, type: 'transport', time: '16:30', desc: '广安里→LCT观景台，约15min', detail: '广安里→LCT Land Mark Tower\n约8km，车费₩8,000-10,000\n16:30出发约17:00到达' },
-      { name: 'X the Sky 观景台 🎟️', lat: 35.1610, lng: 129.1640, type: 'spot', time: '17:00', desc: '韩国最高观景台(411.6m)！日落+夜景黄金时段', budget: '₩27,000/人 ≈ ¥148', detail: 'LCT Land Mark Tower 98-100F\n透明玻璃桥震撼体验\n全球最高星巴克(99F)\n10:00-21:00（20:30停售）\nBusan Pass A组可覆盖\n17:00-18:00日落时段最惊艳！', pay: { card: 1 }, xhsKeyword: '釜山XtheSky观景台' },
-      { name: '地铁去Centum City', lat: 35.1610, lng: 129.1640, type: 'transport', time: '18:15', desc: '海云台站→Centum City站，约10min', detail: '海云台站→Centum City站\n地铁2号线约10min' },
-      { name: '新世界百货 Centum City', lat: 35.1691, lng: 129.1298, type: 'spot', time: '18:30', desc: '世界最大百货，奢侈品+韩妆大牌', detail: 'Centum City站直达\n世界最大百货商场\n奢侈品/韩妆/服饰一站购\n可当日退税\n逛40min', pay: { card: 1, alipay: 0.5 }, xhsKeyword: '新世界센텀시티 부산 쇼핑' },
-      { name: 'Centum City 晚餐', lat: 35.1691, lng: 129.1298, type: 'food', time: '19:30', desc: '新世界百货B1美食层多选', budget: '₩15,000-20,000/人 ≈ ¥82-110', detail: '新世界百货B1美食广场\nSpiceman韩式料理/日式定食\n多家可选，丰俭由人\n饭后直接去Spa Land泡汤', pay: { card: 1, alipay: 0.5 }, xhsKeyword: '신세계 센텀시티 부산 B1 맛집' },
-      { name: 'Spa Land 温泉 🎟️', lat: 35.1691, lng: 129.1298, type: 'spot', time: '20:30', desc: 'Centum City内，汗蒸幕+汤泉，舒缓疲劳', budget: '₩15,000/人（Pass覆盖）', detail: '新世界Centum City 1F\n多种主题汗蒸幕+温泉池\n22:00关门，20:30到够泡\nBusan Pass A组\n泡完打车回酒店', pay: { card: 1 }, xhsKeyword: '釜山SpaLand_centum' },
-      { name: '打车回酒店', lat: 35.1691, lng: 129.1298, type: 'transport', time: '21:45', desc: 'Centum City→海云台酒店，约15min', detail: 'Centum City→朝昕经典酒店\n打车约15min，车费₩8,000-10,000' }
+      { name: '地铁去Centum City', lat: 35.1533, lng: 129.1185, type: 'transport', time: '16:30', desc: '广安里站→Centum City站，地铁2号线约15min', detail: '广安里站→Centum City站\n地铁2号线直达约15min\n车费₩1,400/人\n16:30出发约17:00到达' },
+      { name: '新世界百货 Centum City', lat: 35.1691, lng: 129.1298, type: 'spot', time: '17:00', desc: '世界最大百货，奢侈品+韩妆大牌', detail: 'Centum City站直达\n世界最大百货商场\n奢侈品/韩妆/服饰一站购\n可当日退税\n逛1.5hr', pay: { card: 1, alipay: 0.5 }, xhsKeyword: '新世界센텀시티 부산 쇼핑' },
+      { name: 'Centum City 晚餐', lat: 35.1691, lng: 129.1298, type: 'food', time: '18:30', desc: '新世界百货B1美食层多选', budget: '₩15,000-20,000/人 ≈ ¥82-110', detail: '新世界百货B1美食广场\nSpiceman韩式料理/日式定食\n多家可选，丰俭由人\n饭后直接去Spa Land泡汤', pay: { card: 1, alipay: 0.5 }, xhsKeyword: '신세계 센텀시티 부산 B1 맛집' },
+      { name: 'Spa Land 温泉 🎟️', lat: 35.1691, lng: 129.1298, type: 'spot', time: '19:30', desc: 'Centum City内，汗蒸幕+汤泉，舒缓疲劳', budget: '₩15,000/人（Pass覆盖）', detail: '新世界Centum City 1F\n多种主题汗蒸幕+温泉池\n22:00关门，19:30到够泡\nBusan Pass A组\n泡完打车回酒店', pay: { card: 1 }, xhsKeyword: '釜山SpaLand_centum' },
+      { name: '打车回酒店', lat: 35.1691, lng: 129.1298, type: 'transport', time: '21:00', desc: 'Centum City→海云台酒店，约15min', detail: 'Centum City→朝昕经典酒店\n打车约15min，车费₩8,000-10,000' }
     ]
   },
 {
@@ -308,12 +306,11 @@ function overviewContent() {
 </div>
 <div class="section-head">Visit Busan Pass 🎟️</div>
 <div class="pay-summary"><h4>🎟️ 行程中可用 Pass 的景点</h4>
-<div><strong>X the Sky 观景台</strong>（D2）— A组，原价₩27,000</div>
 <div><strong>Spa Land 温泉</strong>（D2）— A组，原价₩15,000</div>
 <div><strong>海岸列车</strong>（D2）— B组，原价₩7,000</div>
 <div><strong>松岛海上缆车</strong>（D3）— B组，原价₩17,000</div>
 <div><strong>甘川文化村</strong>（D3）— B组，原价₩5,000</div>
-<div style="margin-top:4px">推荐：升级 <strong>BIG5票券</strong> ¥295，5个景点全回本（原价约₩71,000）</div>
+<div style="margin-top:4px">推荐：升级 <strong>BIG3票券</strong> ¥225，4个景点全回本（原价约₩44,000）</div>
 <div style="color:var(--text-tertiary);font-size:12px">购买：金海机场 / Centum City B1 / visitbusanpass.com</div>
 </div>
 <div class="section-head">支付提醒</div>
